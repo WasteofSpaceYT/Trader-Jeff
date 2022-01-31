@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./Components/login";
@@ -8,7 +8,6 @@ import Layout from "./Components/layout"
 import Chart from "./Components/charts";
 import Signup from "./Components/signup";
 import AuthContext from "./Components/authcontext";
-
 function App(){
   const [auth, setAuth] = useState(false);
    const login = () => {
@@ -20,7 +19,7 @@ function App(){
 return (
   <React.Fragment>
       <AuthContext.Provider
-            value={{ auth: auth, login: login, logout: logout }}
+            value={{ auth: auth, login: login, logout: logout, redirect: "" }}
       >
     <BrowserRouter>
       <Routes>

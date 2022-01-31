@@ -3,6 +3,7 @@ import AuthContext from "./authcontext";
 import ReactDOM from "react-dom";
 import { initializeApp } from "firebase/app";
 import { getFirestore, getDoc, doc, updateDoc, setDoc } from "firebase/firestore"
+import { NavLink } from "react-router-dom";
 function LoginPage(){
 var auth = useContext(AuthContext);
 // TODO: Add SDKs for Firebase products that you want to use
@@ -99,10 +100,12 @@ return (
     <div className="app">
       <div className="login-form">
         <div className="title">Sign In</div>
-        {isSubmitted ? <div>User is successfully logged in</div> : renderForm}
+        {isSubmitted ? <div><p>User is successfully logged in</p> 
+        <NavLink to={auth.redirect}><button>Click to go back to previous page</button></NavLink></div> : renderForm}
       </div>
     </div>
   );
 }
+
 
 export default LoginPage;
