@@ -58,7 +58,4 @@ function Chart(){
     )
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<Chart />, rootElement);
-
 export default Chart;

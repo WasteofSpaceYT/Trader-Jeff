@@ -24,7 +24,4 @@ createUserWithEmailAndPassword(auth, email, password)
   );
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<Signup />, rootElement);
-
 export default Signup;

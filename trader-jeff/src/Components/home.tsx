@@ -9,7 +9,4 @@ function Home(){
     )
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<Home />, rootElement);
-
 export default Home;

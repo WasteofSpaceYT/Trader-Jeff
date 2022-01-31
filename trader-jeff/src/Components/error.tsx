@@ -9,7 +9,4 @@ function ErrorPage(){
     )
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<ErrorPage />, rootElement);
-
 export default ErrorPage;

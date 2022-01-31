@@ -104,7 +104,5 @@ return (
     </div>
   );
 }
-const rootElement = document.getElementById("root");
-ReactDOM.render(<LoginPage />, rootElement);
 
 export default LoginPage;
