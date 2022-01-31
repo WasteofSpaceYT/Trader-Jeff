@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import react, { useContext } from "react";
 import AuthContext from './authcontext';
-import logo from "../image.jpg"
+import logo from "../logo.png"
 import "./styles.css"
 
 const Layout = () => {
