@@ -4,7 +4,15 @@ import ReactDOM from "react-dom";
 import { initializeApp } from "firebase/app";
 import { getFirestore, getDoc, doc, updateDoc, setDoc } from "firebase/firestore"
 import { NavLink } from "react-router-dom";
+import { useCookies } from "react-cookie";
+
 function LoginPage(){
+  const [cookies, setCookie, removeCookie] = useCookies();
+
+  function handleSetCookie(name:string, userObject: any) {
+    setCookie(name, userObject, { path: '/' });
+  }
+
 var auth = useContext(AuthContext);
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -45,6 +53,8 @@ const handleSubmit = (event) => {
   event.preventDefault();
 
   var { uname, pass } = document.forms[0];
+  console.log(typeof uname)
+  console.log(document.forms)
 
   // Find user login info
   const userData = getUserInfo(uname.value).then(userData => {;
@@ -59,6 +69,8 @@ const handleSubmit = (event) => {
     } else {
       setIsSubmitted(true);
       auth.login();
+      handleSetCookie("username", uname.value);
+      handleSetCookie("password", pass.value);
     }
   } else {
     // Username not found
