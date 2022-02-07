@@ -1,13 +1,12 @@
 import { initializeApp } from "firebase/app";
-import { doc, getFirestore } from "firebase/firestore";
-import React, { useContext } from "react";
-import walletContext from "./walletContext";
+import { getDoc, doc, getFirestore } from "firebase/firestore";
+import React, { useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactDOM from "react-dom";
 
-var walletcontent: any[] = [];
 const Wallet = () => {
-  var walletthingy = useContext(walletContext)
+  var walletcontent: any[] = [];
+  const [walletthingy, setWalletthingy] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies();
 	const firebaseConfig = {
 		apiKey: "AIzaSyCoik6dAfUPkjTD4ediiG7phRzH3VKhthk",
@@ -24,6 +23,7 @@ const Wallet = () => {
 	  const app = getFirestore();
 	  var userRef = doc(app, `users/${cookies.username}`);
 	  //@ts-ignore
+    
 	  var userData = getDoc(userRef).then(userData => {
 		if (userData.data()) {
 		  //@ts-ignore
@@ -31,28 +31,33 @@ const Wallet = () => {
 				//@ts-ignore
 				var wallet = userData.data()["wallet"];
 				//@ts-ignore
-				
 				for(var i = 0; i < wallet.length; i++){
 					//@ts-ignore
 					var walletitem = wallet[i];
 					//@ts-ignore
 					walletcontent.push(
-						<div className="walletitem">
-							<div className="walletitem-name">{walletitem.name}</div>
-							<div className="walletitem-price">{walletitem.price}</div>
-							<div className="walletitem-amount">{walletitem.amount}</div>
-						</div>
+						`<div className="walletitem">
+							<div className="walletitem-name">${walletitem.name}</div>
+							<div className="walletitem-price">${walletitem.price}</div>
+							<div className="walletitem-amount">${walletitem.amount}</div>
+						</div>`
 					)
 				}
-        walletthingy.walletState = true;
+        setWalletthingy(true);
+        console.log("beep")
+        console.log(walletcontent)
 			} else {
-				walletthingy.walletState = false;
+        setWalletthingy(false);
+        console.log("beepp")
 			}
 		}
 	})
+  function Set() {
+    return { __html: walletcontent.join("").replace("\n", "").replace("\t", "") };
+  }
   return (
-    <div>
-      {walletthingy.walletState ? walletcontent.join("") :
+    <div id="walletthing">
+      {walletthingy ? <div dangerouslySetInnerHTML={Set()}></div> :
       <div>
         <p>You have no items in your wallet</p>
       </div>}

@@ -53,8 +53,6 @@ const handleSubmit = (event) => {
   event.preventDefault();
 
   var { uname, pass } = document.forms[0];
-  console.log(typeof uname)
-  console.log(document.forms)
 
   // Find user login info
   const userData = getUserInfo(uname.value).then(userData => {;
