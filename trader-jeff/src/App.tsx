@@ -38,6 +38,7 @@ return (
           <Route path="charts" element={<Chart />} />
           <Route path="*" element={<ErrorPage />} />
           <Route path="signup" element={<Signup />} />
+          {/*//@ts-ignore*/}
           <Route path="wallet" element={<Wallet />} />
         </Route>
       </Routes>
