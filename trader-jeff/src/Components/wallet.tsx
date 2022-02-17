@@ -26,7 +26,6 @@ const Wallet = () => {
 	  const app = getFirestore();
 	  var userRef = doc(app, `users/${cookies.username}`);
 	  //@ts-ignore
-    
 	  var userData = getDoc(userRef).then(userData => {
 		if (userData.data()) {
       //@ts-ignore
@@ -35,22 +34,19 @@ const Wallet = () => {
 			if(userData.data()["wallet"]){
 				//@ts-ignore
 				var wallet: any[] = userData.data()["wallet"];
-				//@ts-ignore
-				for(var i in wallet){
-          console.log(wallet[i])
-					//@ts-ignore
-					var walletitem = wallet[i];
-					//@ts-ignore
-          if(!usedTokens.includes(walletitem.name)){
-            console.log(usedTokens)
-					setwalletcontent(walletcontent + 
-						`<tr><td>${walletitem.name}</td><td>${walletitem.price}</td><td>${walletitem.amount}</td></tr>`)
-          console.log(walletcontent)
-          wallettokens = usedTokens
-          wallettokens.push(walletitem.name)
-          setUsedTokens(wallettokens)
+        var wallletcontent: string = "";
+        var contnum: number = 0;
+        wallet.forEach(element => {
+          if(contnum < wallet.length){
+          wallletcontent += 
+          `<tr><td>${element.name}</td><td>${element.price}</td><td>${element.amount}</td></tr>`
           }
+          else {
+            return
           }
+        })
+        setUsedTokens(wallettokens)
+        setwalletcontent(wallletcontent)
         setWalletthingy(true);
 			} else {
         setWalletthingy(false);

@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 function LoginPage(){
+
   const [cookies, setCookie, removeCookie] = useCookies();
 
   function handleSetCookie(name:string, userObject: any) {
@@ -101,7 +102,7 @@ const renderForm = (
         {renderErrorMessage("pass")}
       </div>
       <div className="button-container">
-        <input type="submit" />
+        <input type="submit" value="Login" />
       </div>
     </form>
   </div>
@@ -111,7 +112,7 @@ return (
       <div className="login-form">
         <div className="title">Sign In</div>
         {isSubmitted ? <div><p>User is successfully logged in</p> 
-        <NavLink to={auth.redirect}><button>Click to go back to previous page</button></NavLink></div> : renderForm}
+        <NavLink to={"/"}><button>Back</button></NavLink></div> : renderForm}
       </div>
     </div>
   );

@@ -18,8 +18,17 @@
   },
   "homepage": "https://github.com/WasteofSpaceYT/Trader-Jeff#readme",
   "dependencies": {
+    "@material-ui/core": "^4.12.3",
     "firebase": "^9.6.5",
     "plotly": "^1.0.6",
+    "plotly.js": "^2.9.0",
+    "prop-types": "^15.8.1",
+    "react-plotly.js": "^2.5.1",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.1",
+    "yahoo-finance": "^0.3.7",
     "yfinance": "0.0.6"
   },
   "devDependencies": {

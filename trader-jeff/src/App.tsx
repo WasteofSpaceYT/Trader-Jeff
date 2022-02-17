@@ -37,8 +37,7 @@ return (
           <Route path="login" element={<LoginPage />} />
           <Route path="charts" element={<Chart />} />
           <Route path="*" element={<ErrorPage />} />
-          <Route path="signup" element={<Signup />} />
-          {/*//@ts-ignore*/}
+          <Route path="signup" element={<Signup path={window.location.pathname}/>} />
           <Route path="wallet" element={<Wallet />} />
         </Route>
       </Routes>

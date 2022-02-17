@@ -3,13 +3,15 @@ import { doc, getDoc, getFirestore } from "firebase/firestore";
 import React from "react";
 import { useCookies } from "react-cookie";
 import ReactDOM from "react-dom";
+var yahooFinance = require('yahoo-finance');
 
-function Chart() {
+function Chart(){
 	
 	//@ts-ignore
 	const drawchart = (event) => {
 		event.preventDefault();
 		var token = event.target[0].value
+    
 	}
 
     return(
@@ -26,7 +28,7 @@ function Chart() {
         <input type="text" name="tokenfield" required />
       </div>
       <div className="button-container">
-        <input type="submit" />
+        <input type="submit" value="Draw Chart" />
       </div>
     </form>
   </div>
