@@ -10,7 +10,10 @@ import Chart from "./Components/charts";
 import Signup from "./Components/signup";
 import AuthContext from "./Components/authcontext";
 import Wallet from "./Components/wallet";
-function App(){
+import Buy from "./Components/buy";
+import Sell from "./Components/sell";
+
+function App() {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
 
   function handleSetCookie() {
@@ -18,32 +21,35 @@ function App(){
   }
 
   const [auth, setAuth] = useState(false);
-   const login = () => {
-      setAuth(true);
-   };
-   const logout = () => {
-      setAuth(false);
-   };
-   
-return (
-  <React.Fragment>
+  const login = () => {
+    setAuth(true);
+  };
+  const logout = () => {
+    setAuth(false);
+  };
+
+  return (
+    <React.Fragment>
       <AuthContext.Provider
-            value={{ auth: auth, login: login, logout: logout, redirect: "" }}
+        value={{ auth: auth, login: login, logout: logout, redirect: "" }}
       >
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="charts" element={<Chart />} />
-          <Route path="*" element={<ErrorPage />} />
-          <Route path="signup" element={<Signup path={window.location.pathname}/>} />
-          <Route path="wallet" element={<Wallet />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="charts" element={<Chart />} />
+              {/* <Route path="getKey" element={<GetKey />} /> */}
+            <Route path="*" element={<ErrorPage />} />
+            <Route path="signup" element={<Signup path={window.location.pathname} />} />
+            <Route path="wallet" element={<Wallet />} />
+            <Route path="buy" element={<Buy />} />
+            <Route path="sell" element={<Sell />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </AuthContext.Provider>
-  </React.Fragment>
+  </React.Fragment >
   );
 }
 

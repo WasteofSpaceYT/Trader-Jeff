@@ -57,20 +57,20 @@ const Layout = () => {
   }
 
   return (
-    <>
-      <nav className="navbar">
-        <NavLink to="/"><img src={logo} alt="" className="navlogo"></img></NavLink>
-        <NavLink to="/charts"><button className="button1">Charts</button></NavLink>
-        <NavLink to="/wallet"><button className="button1">Wallet</button></NavLink>
-        {auth ? <a id="profileIcon" className="alignright"><img src={logo} style={{ width: "50px", height: "50px", borderRadius: 50 / 2 }}
-    /></a> : <header className="alignright">
-          <NavLink to="/login" ><button className="button1">Login</button></NavLink>
-          <NavLink to="/signup"><button className="button1">Sign-up</button></NavLink>
-        </header>}
-      </nav>
+    <><nav className="navbar">
+      <NavLink to="/"><img src={logo} alt="" className="navlogo"></img></NavLink>
+      <NavLink to="/charts"><button className="button1">Charts</button></NavLink>
+      <NavLink to="/wallet"><button className="button1">Wallet</button></NavLink>
+      <NavLink to="/buy"><button className="button1">Buy</button></NavLink>
+      <NavLink to="/sell"><button className="button1">Sell</button></NavLink>
+      {auth ? <a id="profileIcon" className="alignright"><img src={logo} style={{ width: "50px", height: "50px", borderRadius: 50 / 2 }}
+      /></a> : <header className="alignright">
+        <NavLink to="/login" ><button className="button1">Login</button></NavLink>
+        <NavLink to="/signup"><button className="button1">Sign-up</button></NavLink>
+      </header>}
+    </nav>
 
-      <Outlet />
-    </>
+      <Outlet /></>
   )
 };
 
