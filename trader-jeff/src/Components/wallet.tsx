@@ -3,12 +3,14 @@ import { getDoc, doc, getFirestore } from "firebase/firestore";
 import React, { useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactDOM from "react-dom";
+import $ from "jquery";
 
 const Wallet = () => {
   const [usedTokens, setUsedTokens] = useState(Array());
   const [walletcontent, setwalletcontent] = useState("");
   const [walletthingy, setWalletthingy] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies();
+  const [price, setPrice] = useState("")
   var wallettokens: any[] = []
 	  //@ts-ignore
     var firebaseConfig = {
@@ -38,20 +40,10 @@ const Wallet = () => {
         var contnum: number = 0;
         wallet.forEach(element => {
           if(contnum < wallet.length){
-            var options = {
-              url: `https://stock-data-yahoo-finance-alternative.p.rapidapi.com/v8/finance/chart/${element.token}`,
-              params: {range: '1d', comparisons: 'AMZN', events: 'div,split'},
-              headers: {
-                'x-rapidapi-key': 'fdce3efc23mshe63dce1b90f5763p1672e8jsn9c315c3a4421',
-                'x-rapidapi-host': 'stock-data-yahoo-finance-alternative.p.rapidapi.com'
-              }
-            };
-            $.get(options).done(data => {
-            var price = data.chart.result[0].meta.regularMarketPrice
-            var change = price - element.avgprice
+
           wallletcontent += 
-          `<tr><td>${element.token}</td><td>${element.price}</td><td>${element.amount}</td><td>${change}</td></tr>`
-            })
+          `<tr><td>${element.token}</td><td>${element.amount}</td></tr>`
+          console.log(wallletcontent)
           }
           else {
             return
@@ -68,7 +60,7 @@ const Wallet = () => {
 	})
   function setContent(){
     console.log(walletcontent)
-    return { __html: "<tr><th>Token</th><th>Price</th><th>Amount</th><th>Average Change</th></tr>" + walletcontent.replace(",function () { [native code] }", "")};
+    return { __html: "<tr><th>Token</th><th>Amount</th></tr>" + walletcontent.replace(",function () { [native code] }", "")};
   }
   if(walletthingy){
     return (
