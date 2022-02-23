@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { doc, getDoc, getFirestore, updateDoc } from 'firebase/firestore';
-import { userInfo } from 'os';
+import { totalmem, userInfo } from 'os';
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import $ from 'jquery';
@@ -24,12 +24,19 @@ function Buy() {
   }
   const [auth, setAuth] = useState(false)
   const [cookies, setCookie, removeCookie] = useCookies();
+  const [bal, setBal] = useState("");
+  const [otherText, setOtherText] = useState("");
+  const [totalMessage, setTotalMessage] = useState("");
+  const [price, setPrice] = useState("");
+  const [token, setToken] = useState("");
   if (cookies.username != null && cookies.password != null && !auth) {
     //check credentials
     var docref = doc(app, `users/${cookies.username}`);
     //@ts-ignore
     var userData = getDoc(docref).then(userData => {
       if (userData.data()) {
+        //@ts-ignore
+        setBal(userData.data().balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
         //@ts-ignore
         if (userData.data().password == cookies.password) {
           setAuth(true);
@@ -50,7 +57,46 @@ function Buy() {
     console.log(auth);
   }
 
+  var Balanceing = (event: any) => {
+    event.preventDefault();
 
+    setTimeout(() => {
+      setToken(event.target.value)
+      var tOken = event.target.value;
+      var options = {
+        url: `https://stock-data-yahoo-finance-alternative.p.rapidapi.com/v8/finance/chart/${tOken}`,
+        params: { range: '1d', comparisons: 'AMZN', events: 'div,split' },
+        headers: {
+          'x-rapidapi-key': 'fdce3efc23mshe63dce1b90f5763p1672e8jsn9c315c3a4421',
+          'x-rapidapi-host': 'stock-data-yahoo-finance-alternative.p.rapidapi.com'
+        }
+      };
+      $.get(options).done(res => {
+        var price = res.chart.result[0].meta.regularMarketPrice.toString();
+        var othertext = `${tOken} is currently at ${price}`
+        setOtherText(othertext)
+        setPrice(price)
+      }).catch(err => {
+        setOtherText("")
+      })
+    },1000)
+
+  }
+var settotal = (event: any) => {
+  event.preventDefault();
+  setTimeout(() => {
+    if(event.target.value != ""){
+    console.log(event.target.value)
+    console.log(price)
+  var total = (parseInt(event.target.value) * parseFloat(price)).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+  var totalmessage = `${total}`
+  setTotalMessage(totalmessage)
+  console.log(totalMessage)
+    } else {
+      setTotalMessage("0.00")
+    }
+  },1000)
+}
   var submit = (event: any) => {
     event.preventDefault();
 
@@ -143,7 +189,8 @@ function Buy() {
               //@ts-ignore
               if (userinfo.wallet[index].amount != undefined) {
                 //@ts-ignore
-                var newamount = parseInt(userinfo.wallet[index].amount) + parseInt(amountval).toString();
+                var newamount = (parseInt(userinfo.wallet[index].amount) + parseInt(amountval)).toString();
+                console.log(newamount)
               } else {
                 newamount = amountval
               }
@@ -165,11 +212,16 @@ function Buy() {
     <div>
       <h1>Buy</h1>
       <form onSubmit={submit}>
-        <input type="text" placeholder="Token" style={{ marginBottom: 10 }} required />
+        <input type="text" placeholder="Token" style={{ marginBottom: 10 }} onInput={Balanceing} required />
         <br />
-        <input type="text" placeholder="Amount" style={{ marginBottom: 10 }} required />
+        {(token != "") ? <input type="number" min={0} placeholder="Amount" onChange={settotal} style={{marginRight: 10}} required /> : <input type="number" min={0} placeholder="Amount" style={{marginRight: 10}} disabled />}
+        {(token != "") ? <input type="text" placeholder={`Total: $${totalMessage}`} style={{ marginBottom: 10 }} disabled /> : <input type="text" placeholder={`Total:`} style={{ marginBottom: 10 }} value={""} disabled />}
+        <br />
+        {(bal != "") ? <input type="text" placeholder={`You have $${bal}`} style={{marginBottom: 10}} disabled /> : <input type="text" placeholder="Please log in." style={{marginBottom: 10}} disabled />}
         <br />
         <input type="submit" value="Buy" />
+        <br />
+        {(otherText != "") ? <p className="otherText">{otherText}</p> : <p />}
       </form>
     </div>
   )
