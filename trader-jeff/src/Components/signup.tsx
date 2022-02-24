@@ -108,6 +108,10 @@ const renderForm = (
         <input type="password" name="pass" required />
         {renderErrorMessage("pass")}
       </div>
+      <div className="input-container">
+        <label>Starting Balance</label>
+        <input type="number" name="balance" prefix="$" min="0" required />
+        </div>
       <div className="button-container">
         <input type="submit" value="Login" />
       </div>
