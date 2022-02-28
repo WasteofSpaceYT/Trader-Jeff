@@ -24,6 +24,14 @@ const Layout = () => {
   const app = getFirestore();
   const [auth, setAuth] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies();
+  const [hover, setHover] = useState(false);
+
+  const handleFalse = () => {
+    setHover(false);
+  }
+  const handleTrue = () => {
+    setHover(true);
+  }
 
   function handleCookieLogout(name: string) {
     removeCookie(name, { path: '/' });
@@ -55,7 +63,12 @@ const Layout = () => {
     );
     console.log(auth);
   }
-
+  const handleLogout = (event: any) => {
+    event.preventDefault();
+    handleCookieLogout("username");
+    handleCookieLogout("password");
+    setAuth(false);
+  }
   return (
     <><nav className="navbar">
       <NavLink to="/"><img src={logo} alt="" className="navlogo"></img></NavLink>
@@ -63,8 +76,8 @@ const Layout = () => {
       <NavLink to="/wallet"><button className="button1">Wallet</button></NavLink>
       <NavLink to="/buy"><button className="button1">Buy</button></NavLink>
       <NavLink to="/sell"><button className="button1">Sell</button></NavLink>
-      {auth ? <a id="profileIcon" className="alignright"><img src={logo} style={{ width: "50px", height: "50px", borderRadius: 50 / 2 }}
-      /></a> : <header className="alignright">
+      {auth ? <a id="profileIcon" className="alignright"  onMouseOver={handleTrue} onMouseLeave={handleFalse}><img src={logo} style={{ width: "50px", height: "50px", borderRadius: 50 / 2}}
+      />{hover ? <ul><li><NavLink to="/dashboard"><button className="ProfileList">Dashboard</button></NavLink></li><li><NavLink to="/acctset"><button className="ProfileList">Account Settings</button></NavLink></li><li><button className="ProfileList" onClick={handleLogout}>Logout</button></li></ul> : ""}</a> : <header className="alignright">
         <NavLink to="/login" ><button className="button1">Login</button></NavLink>
         <NavLink to="/signup"><button className="button1">Sign-up</button></NavLink>
       </header>}

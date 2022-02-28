@@ -1,7 +1,7 @@
 //import react from "react"
 import { render } from "@testing-library/react";
 import { initializeApp } from "firebase/app";
-import { doc, getDoc, getFirestore } from "firebase/firestore";
+import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { useContext, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactDOM from "react-dom";
@@ -60,30 +60,35 @@ const handleSubmit = (event) => {
   //Prevent page reload
   event.preventDefault();
 
-  var { uname, pass } = document.forms[0];
-
-  // Find user login info
-  const userData = getUserInfo(uname.value).then(userData => {;
-
-  // Compare user info
-  if (userData) {
-    console.log(userData);
-    //@ts-ignore
-    if (userData["password"] !== pass.value) {
-      // Invalid password
-      setErrorMessages({ name: "pass", message: errors.pass });
-    } else {
-      setIsSubmitted(true);
-      auth.login();
-      handleSetCookie("username", uname.value);
-      handleSetCookie("password", pass.value);
-    }
-  } else {
-    // Username not found
-    setErrorMessages({ name: "uname", message: errors.uname });
+  var { uname, pass, balance } = document.forms[0];
+  if(uname.value === ""){
+    setErrorMessages({uname: "invalid username"});
+    return;
   }
-});
-};
+  if(pass.value === ""){
+    setErrorMessages({pass: "invalid password"});
+    return;
+  }
+  if(balance.value === ""){
+    setErrorMessages({balance: "invalid balance"});
+    return;
+  }
+  const userData = getUserInfo(uname.value).then(userData => {
+  if(userData){
+    setErrorMessages({uname: "username already exists"});
+    return;
+  } else {
+    var udat = {
+      password: pass.value,
+      balance: parseInt(balance.value)
+    }
+    var docref = doc(app, `users/${uname.value}`);
+    setDoc(docref, udat)
+    setIsSubmitted(true);
+  }
+  })
+}
+
 
 // Generate JSX code for error message
 //@ts-ignore
@@ -123,7 +128,7 @@ return (
       <div className="login-form">
         <div className="title">Sign In</div>
         {isSubmitted ? <div><p>User has successfully registered</p> 
-        <NavLink to={path}><button>Back</button></NavLink></div> : renderForm}
+        <NavLink to={"/login"}><button>Login</button></NavLink></div> : renderForm}
       </div>
     </div>
   );

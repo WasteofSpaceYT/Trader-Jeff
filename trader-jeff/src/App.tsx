@@ -12,6 +12,8 @@ import AuthContext from "./Components/authcontext";
 import Wallet from "./Components/wallet";
 import Buy from "./Components/buy";
 import Sell from "./Components/sell";
+import Dashboard from "./Components/dashboard";
+import Settings from "./Components/settings";
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
@@ -45,6 +47,8 @@ function App() {
             <Route path="wallet" element={<Wallet />} />
             <Route path="buy" element={<Buy />} />
             <Route path="sell" element={<Sell />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="acctset" element={<Settings />} />
           </Route>
         </Routes>
       </BrowserRouter>
