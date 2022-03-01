@@ -73,11 +73,11 @@ const Layout = () => {
     <><nav className="navbar">
       <NavLink to="/"><img src={logo} alt="" className="navlogo"></img></NavLink>
       <NavLink to="/charts"><button className="button1">Charts</button></NavLink>
-      <NavLink to="/wallet"><button className="button1">Wallet</button></NavLink>
+      {/* <NavLink to="/wallet"><button className="button1">Wallet</button></NavLink>
       <NavLink to="/buy"><button className="button1">Buy</button></NavLink>
-      <NavLink to="/sell"><button className="button1">Sell</button></NavLink>
-      {auth ? <a id="profileIcon" className="alignright"  onMouseOver={handleTrue} onMouseLeave={handleFalse}><img src={logo} style={{ width: "50px", height: "50px", borderRadius: 50 / 2}}
-      />{hover ? <ul><li><NavLink to="/dashboard"><button className="ProfileList">Dashboard</button></NavLink></li><li><NavLink to="/acctset"><button className="ProfileList">Account Settings</button></NavLink></li><li><button className="ProfileList" onClick={handleLogout}>Logout</button></li></ul> : ""}</a> : <header className="alignright">
+      <NavLink to="/sell"><button className="button1">Sell</button></NavLink> */}
+      {auth ? <a id="profileIcon" className="alignright"  onMouseOver={handleTrue} onMouseLeave={handleFalse}><img src={logo} style={{ width: "50px", height: "50px", borderRadius: 50 / 2, float: "right"}}
+      /><br /><br />{hover ? <ul><li><NavLink to="/wallet"><button className="ProfileList">Wallet</button></NavLink></li><li><button className="ProfileList"><NavLink to="/buy" className="navLinkThing">Buy</NavLink> / <NavLink to="/sell" className="navLinkThing">Sell</NavLink></button></li><li><NavLink to="/acctset"><button className="ProfileList">Account Settings</button></NavLink></li><li><button className="ProfileList" onClick={handleLogout}>Logout</button></li></ul> : ""}</a> : <header className="alignright">
         <NavLink to="/login" ><button className="button1">Login</button></NavLink>
         <NavLink to="/signup"><button className="button1">Sign-up</button></NavLink>
       </header>}

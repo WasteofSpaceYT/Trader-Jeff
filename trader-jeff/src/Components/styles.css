@@ -1,3 +1,7 @@
+:root {
+    --colorthing: black;
+}
+
 .navlogo {
     width: 50px;
     height: 50px;
@@ -54,5 +58,11 @@ li {
 
 .ProfileList:hover {
     background-color: black;
+    --colorthing: white;
     color: white;
+}
+
+.navLinkThing {
+    color: var(--colorthing, black);
+    text-decoration: none;
 }
