@@ -5,9 +5,10 @@ import { initializeApp } from "firebase/app";
 import { getFirestore, getDoc, doc, updateDoc, setDoc } from "firebase/firestore"
 import { NavLink } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useAlert } from "react-alert";
 
 function LoginPage(){
-
+  const alert = useAlert();
   const [cookies, setCookie, removeCookie] = useCookies();
 
   function handleSetCookie(name:string, userObject: any) {
@@ -64,16 +65,17 @@ const handleSubmit = (event) => {
     //@ts-ignore
     if (userData["password"] !== pass.value) {
       // Invalid password
-      setErrorMessages({ name: "pass", message: errors.pass });
+      alert.error("Invalid password");
     } else {
       setIsSubmitted(true);
       auth.login();
       handleSetCookie("username", uname.value);
       handleSetCookie("password", pass.value);
+      alert.success("Logged in successfully");
     }
   } else {
     // Username not found
-    setErrorMessages({ name: "uname", message: errors.uname });
+    alert.error("Invalid username");
   }
 });
 };

@@ -6,6 +6,8 @@ import logo from "../logo.png"
 import "./styles.css"
 import { initializeApp } from "firebase/app";
 import { getDoc, doc, getFirestore } from "firebase/firestore";
+import LogoutIcon from '@mui/icons-material/Logout';
+import SvgIcon from "@mui/icons-material/Logout";
 
 const Layout = () => {
   //@ts-ignore
@@ -68,6 +70,7 @@ const Layout = () => {
     handleCookieLogout("username");
     handleCookieLogout("password");
     setAuth(false);
+    window.location.href="/";
   }
   return (
     <><nav className="navbar">
@@ -77,7 +80,7 @@ const Layout = () => {
       <NavLink to="/buy"><button className="button1">Buy</button></NavLink>
       <NavLink to="/sell"><button className="button1">Sell</button></NavLink> */}
       {auth ? <a id="profileIcon" className="alignright"  onMouseOver={handleTrue} onMouseLeave={handleFalse}><img src={logo} style={{ width: "50px", height: "50px", borderRadius: 50 / 2, float: "right"}}
-      /><br /><br />{hover ? <ul><li><NavLink to="/wallet"><button className="ProfileList">Wallet</button></NavLink></li><li><button className="ProfileList"><NavLink to="/buy" className="navLinkThing">Buy</NavLink> / <NavLink to="/sell" className="navLinkThing">Sell</NavLink></button></li><li><NavLink to="/acctset"><button className="ProfileList">Account Settings</button></NavLink></li><li><button className="ProfileList" onClick={handleLogout}>Logout</button></li></ul> : ""}</a> : <header className="alignright">
+      /><br /><br />{hover ? <ul><li><NavLink to="/wallet"><button className="ProfileList">Wallet</button></NavLink></li><li><button className="ProfileList"><NavLink to="/buy" className="navLinkThing">Buy</NavLink> / <NavLink to="/sell" className="navLinkThing">Sell</NavLink></button></li><li><NavLink to="/acctset"><button className="ProfileList">Account Settings</button></NavLink></li><li><button className="DelButt" onClick={handleLogout}>Logout <SvgIcon /></button></li></ul> : ""}</a> : <header className="alignright">
         <NavLink to="/login" ><button className="button1">Login</button></NavLink>
         <NavLink to="/signup"><button className="button1">Sign-up</button></NavLink>
       </header>}

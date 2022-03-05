@@ -14,6 +14,9 @@ import Buy from "./Components/buy";
 import Sell from "./Components/sell";
 import Dashboard from "./Components/dashboard";
 import Settings from "./Components/settings";
+import { Provider, positions } from "react-alert";
+//@ts-ignore
+import AlertTemplate from "react-alert-template-basic";
 
 function App() {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
@@ -29,9 +32,13 @@ function App() {
   const logout = () => {
     setAuth(false);
   };
-
+  const options = {
+    timeout: 5000,
+    position: positions.BOTTOM_CENTER
+  };
   return (
     <React.Fragment>
+      <Provider template={AlertTemplate} {...options}>
       <AuthContext.Provider
         value={{ auth: auth, login: login, logout: logout, redirect: "" }}
       >
@@ -53,6 +60,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </AuthContext.Provider>
+    </Provider>
   </React.Fragment >
   );
 }

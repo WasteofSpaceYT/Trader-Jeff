@@ -119,7 +119,7 @@ $.get(options).done(data => {
       }}
     />
 {/* <iframe width="900" height="800" frameBorder="0" scrolling="no" title="chart" src="https://plotly.com/~WasteofSpaceYT/1.embed" id="iframe"></iframe> */}
-
+<p>{useDataX.join(", ")}</p>
 </>
     )
 }

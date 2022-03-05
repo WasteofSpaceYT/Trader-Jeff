@@ -3,6 +3,7 @@ import { render } from "@testing-library/react";
 import { initializeApp } from "firebase/app";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
 import { useContext, useState } from "react";
+import { useAlert } from "react-alert";
 import { useCookies } from "react-cookie";
 import ReactDOM from "react-dom";
 import { NavLink } from "react-router-dom";
@@ -14,6 +15,7 @@ interface SigninPageProps {
 
 function Signup({path}: SigninPageProps) {
   
+  const alert = useAlert();
 
   const [cookies, setCookie, removeCookie] = useCookies();
 
@@ -62,20 +64,20 @@ const handleSubmit = (event) => {
 
   var { uname, pass, balance } = document.forms[0];
   if(uname.value === ""){
-    setErrorMessages({uname: "invalid username"});
+    alert.error("invalid username");
     return;
   }
   if(pass.value === ""){
-    setErrorMessages({pass: "invalid password"});
+    alert.error("invalid password");
     return;
   }
   if(balance.value === ""){
-    setErrorMessages({balance: "invalid balance"});
+    alert.error("invalid balance");
     return;
   }
   const userData = getUserInfo(uname.value).then(userData => {
   if(userData){
-    setErrorMessages({uname: "username already exists"});
+    alert.error("username already exists");
     return;
   } else {
     var udat = {
@@ -85,6 +87,7 @@ const handleSubmit = (event) => {
     var docref = doc(app, `users/${uname.value}`);
     setDoc(docref, udat)
     setIsSubmitted(true);
+    alert.success("Account created");
   }
   })
 }
