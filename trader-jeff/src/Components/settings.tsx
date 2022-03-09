@@ -126,15 +126,18 @@ const Settings = () => {
                 <form onSubmit={handleProfChange}>
                     <label>First Name</label>
                     <br />
-                    <input type="text" placeholder="First Name" value={firstName} />
+                    <input type="text" placeholder="First Name" name="fname" value={firstName} />
                     <br />
                     <label>Last Name</label>
                     <br />
-                    <input type="text" placeholder="Last Name" value={lastName} />
+                    <input type="text" placeholder="Last Name" name="lname" value={lastName} />
                     <br />
                     <label>Display Name</label>
                     <br />
-                    <input type="text" placeholder="Display Name" defaultValue={cookies.username} />
+                    <input type="text" placeholder="Display Name" name="dname" defaultValue={cookies.username} />
+                    <br />
+                    <br />
+                    <button type="submit" className="SaveButton">Save <SvgIcon></SvgIcon></button>
                 </form>
             </div>
             <div>
