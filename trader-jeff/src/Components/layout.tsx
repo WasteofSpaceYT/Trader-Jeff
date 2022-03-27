@@ -8,6 +8,11 @@ import { initializeApp } from "firebase/app";
 import { getDoc, doc, getFirestore } from "firebase/firestore";
 import LogoutIcon from '@mui/icons-material/Logout';
 import SvgIcon from "@mui/icons-material/Logout";
+import { getDownloadURL, getStorage, ref } from "firebase/storage";
+import CandlestickChartIcon from '@mui/icons-material/CandlestickChart';
+import { Button } from "@mui/material";
+import KeyIcon from '@mui/icons-material/Key';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 
 const Layout = () => {
   //@ts-ignore
@@ -23,11 +28,13 @@ const Layout = () => {
 
   // Initialize Firebase
   const firebaseapp = initializeApp(firebaseConfig);
+  const storage = getStorage(firebaseapp);
   const app = getFirestore();
   const [auth, setAuth] = useState(false);
   const [cookies, setCookie, removeCookie] = useCookies();
   const [hover, setHover] = useState(false);
-
+  const [daUrl, setDaUrl] = useState("");
+  //setUrl("gs://paper-plate-5ab88.appspot.com/Screenshot (14).png")
   const handleFalse = () => {
     setHover(false);
   }
@@ -51,6 +58,14 @@ const Layout = () => {
           setAuth(true);
           console.log("logged in")
           console.log(auth)
+          var imageref = ref(storage, `${cookies.username}.png`);
+          getDownloadURL(imageref).then(url => {
+            setDaUrl(url);
+          }).catch(err => {
+            getDownloadURL(ref(storage, "OIP.png")).then(url => {
+              setDaUrl(url);
+            })
+          })
         } else {
           console.log("invalid password");
           handleCookieLogout("username");
@@ -70,19 +85,25 @@ const Layout = () => {
     handleCookieLogout("username");
     handleCookieLogout("password");
     setAuth(false);
-    window.location.href="/";
+    window.location.href = "/";
   }
   return (
     <><nav className="navbar">
       <NavLink to="/"><img src={logo} alt="" className="navlogo"></img></NavLink>
-      <NavLink to="/charts"><button className="button1">Charts</button></NavLink>
+      <NavLink to="/charts" style={{ color: "black", textDecoration: "none" }}><Button variant="outlined" size="small" color="inherit" startIcon={<CandlestickChartIcon />}>Charts</Button></NavLink>
       {/* <NavLink to="/wallet"><button className="button1">Wallet</button></NavLink>
       <NavLink to="/buy"><button className="button1">Buy</button></NavLink>
       <NavLink to="/sell"><button className="button1">Sell</button></NavLink> */}
-      {auth ? <a id="profileIcon" className="alignright"  onMouseOver={handleTrue} onMouseLeave={handleFalse}><img src={logo} style={{ width: "50px", height: "50px", borderRadius: 50 / 2, float: "right"}}
-      /><br /><br />{hover ? <ul><li><NavLink to="/wallet"><button className="ProfileList">Wallet</button></NavLink></li><li><button className="ProfileList"><NavLink to="/buy" className="navLinkThing">Buy</NavLink> / <NavLink to="/sell" className="navLinkThing">Sell</NavLink></button></li><li><NavLink to="/acctset"><button className="ProfileList">Account Settings</button></NavLink></li><li><button className="DelButt" onClick={handleLogout}><SvgIcon /></button></li></ul> : ""}</a> : <header className="alignright">
-        <NavLink to="/login" ><button className="button1">Login</button></NavLink>
-        <NavLink to="/signup"><button className="button1">Sign-up</button></NavLink>
+      {auth ? <a id="profileIcon" className="alignright" onMouseOver={handleTrue} onMouseLeave={handleFalse}><img src={daUrl} style={{ width: "50px", height: "50px", borderRadius: 50 / 2, float: "right" }}
+      /><br /><br />{hover ? 
+      <ul>
+        <li style={{marginBottom: 5}}><NavLink to="/wallet" style={{ textDecoration: "none", color: "black"}}><Button variant="contained" className="ProfileList">Wallet</Button></NavLink></li>
+        <li style={{marginBottom: 5}}><NavLink to="/buy" className="navLinkThing"><Button variant="contained" className="ProfileList">Buy</Button></NavLink>  <NavLink to="/sell" style={{ textDecoration: "none", color: "black"}}><Button variant="contained" className="ProfileList">Sell</Button></NavLink></li>
+        <li style={{marginBottom: 5}}><NavLink to="/acctset" style={{ textDecoration: "none", color: "black", marginBottom: 5 }}><Button variant="contained" className="ProfileList">Account Settings</Button></NavLink></li>
+        <li style={{marginBottom: 5}}><Button className="DelButt" variant="contained" color="error" onClick={handleLogout}><SvgIcon /></Button></li>
+      </ul> : ""}</a> : <header className="alignright">
+        <NavLink to="/login" style={{ textDecoration: 'none', color: "black" }}><Button color="inherit" variant="contained" startIcon={<KeyIcon />}>Login</Button></NavLink>
+        <NavLink to="/signup" style={{ textDecoration: 'none', color: "black", marginLeft: 5 }}><Button variant="contained" color="inherit" startIcon={<LockOpenIcon />}>Sign-up</Button></NavLink>
       </header>}
     </nav>
 

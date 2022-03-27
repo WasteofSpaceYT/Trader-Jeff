@@ -6,6 +6,8 @@ import { useCookies } from "react-cookie";
 import ReactDOM from "react-dom";
 import $ from "jquery";
 import Plot from 'react-plotly.js'
+import { Button, TextField } from "@mui/material";
+import AddchartIcon from '@mui/icons-material/Addchart';
 
 
 function Chart(){ 
@@ -79,10 +81,11 @@ $.get(options).done(data => {
 <div className="form">
     <form onSubmit={drawchart}>
       <div className="input-container">
-        <input type="text" name="tokenfield" required />
+        <TextField type="text" name="tokenfield" label="Token" variant="standard" required />
       </div>
+      <br />
       <div className="button-container">
-        <input type="submit" value="Draw Chart" />
+        <Button type="submit" variant="outlined" color="inherit" startIcon={<AddchartIcon />} >Draw Chart</Button>
       </div>
     </form>
   </div>

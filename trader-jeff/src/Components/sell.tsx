@@ -3,13 +3,15 @@ import { doc, getDoc, getFirestore } from 'firebase/firestore';
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import { getEnabledCategories } from 'trace_events';
+import SellIcon from '@mui/icons-material/Sell';
 import $ from 'jquery';
+import { Button, TextField } from '@mui/material';
 
 function Sell() {
 
   const [cookies, setCookie, removeCookie] = useCookies();
   const [errorText, setErrorText] = useState("");
-  const [hasAmount, setHasAmount] = useState("");
+  const [hasAmount, setHasAmount] = useState(0);
   const [token, setToken] = useState("")
   const [totalMessage, setTotalMessage] = useState("");
   const [amount, setAmount] = useState("")
@@ -89,6 +91,7 @@ function Sell() {
         console.log(price)
       var totaltotal = parseFloat(event.target.value) * parseFloat(price);
       setTotalMessage(totaltotal.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+      
             }
           })
     }
@@ -156,12 +159,12 @@ function Sell() {
     <div>
     <h1>Sell</h1>
     <form onSubmit={submit}>
-        <input type="text" placeholder="Token" style={{ marginBottom: 10 }} onInput={Balanceing} required />
+        <TextField type="text" variant='standard' label="Token" style={{ marginBottom: 10 }} onInput={Balanceing} required />
         <br />
-        {(token != "") ? <input type="number" min={0} max={parseInt(hasAmount) ? parseInt(hasAmount) : 0} placeholder="Amount" onChange={settotal} style={{marginRight: 10}} required /> : <input type="number" min={0} placeholder="Amount" style={{marginRight: 10}} disabled />}
-        {(token != "") ? <input type="text" placeholder={`Total: $${totalMessage}`} style={{ marginBottom: 10 }} disabled /> : <input type="text" placeholder={`Total:`} style={{ marginBottom: 10 }} disabled />}
+        {(token != "") ? <TextField variant="standard" type="number" inputProps={{inputProps: {min: 0, max: hasAmount, type: "number"}}} placeholder="Amount" onChange={settotal} style={{marginRight: 10}} required /> : <TextField variant="standard" type="number" inputProps={{inputProps: {min: 0, type: "number"}}} label="Amount" style={{marginRight: 10}} disabled />}
+        {(token != "") ? <TextField variant="standard" type="text" label={`Total: $${totalMessage}`} style={{ marginBottom: 10 }} disabled /> : <TextField type="text" label={`Total:`} variant="standard" style={{ marginBottom: 10 }} disabled />}
         <br />
-        <input type="submit" value="Sell" />
+        <Button type="submit" variant="contained" color="inherit" startIcon={<SellIcon />}>Sell</Button>
         <br />
         <p className="errorText">{errorText}</p>
       </form>

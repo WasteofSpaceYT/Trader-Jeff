@@ -4,8 +4,13 @@ import { totalmem, userInfo } from 'os';
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import $ from 'jquery';
+import process from 'process';
+import PaymentsIcon from '@mui/icons-material/Payments';
+import { Button, TextField } from '@mui/material';
+import Payments from '@mui/icons-material/Payments';
 
 function Buy() {
+  //@ts-ignore
   const firebaseConfig = {
     apiKey: "AIzaSyCoik6dAfUPkjTD4ediiG7phRzH3VKhthk",
     authDomain: "paper-plate-5ab88.firebaseapp.com",
@@ -14,7 +19,7 @@ function Buy() {
     messagingSenderId: "514869257382",
     appId: "1:514869257382:web:374d1bd4bbeff81aa14067",
     measurementId: "G-HJRSQKL6KM"
-  };
+  }
 
   // Initialize Firebase
   const firebaseapp = initializeApp(firebaseConfig);
@@ -132,6 +137,7 @@ var settotal = (event: any) => {
                 //@ts-ignore
                 amount = user.wallet[i][price];
                 index = i
+                break;
               }
             }
           })
@@ -212,14 +218,14 @@ var settotal = (event: any) => {
     <div>
       <h1>Buy</h1>
       <form onSubmit={submit}>
-        <input type="text" placeholder="Token" style={{ marginBottom: 10 }} onInput={Balanceing} required />
+        <TextField type="text" variant="standard" label="Token" style={{ marginBottom: 10 }} onInput={Balanceing} required />
         <br />
-        {(token != "") ? <input type="number" min={0} placeholder="Amount" onChange={settotal} style={{marginRight: 10}} required /> : <input type="number" min={0} placeholder="Amount" style={{marginRight: 10}} disabled />}
-        {(token != "") ? <input type="text" placeholder={`Total: $${totalMessage}`} style={{ marginBottom: 10 }} disabled /> : <input type="text" placeholder={`Total:`} style={{ marginBottom: 10 }} value={""} disabled />}
+        {(token != "") ? <TextField type="number" variant='standard' inputProps={{inputProps: {min: 0}}} label="Amount" onChange={settotal} style={{marginRight: 10}} required /> : <TextField type="number" variant="standard" inputProps={{inputProps: {min: 0}}} label="Amount" style={{marginRight: 10}} disabled />}
+        {(token != "") ? <TextField type="text" variant='standard' label={`Total: $${totalMessage}`} style={{ marginBottom: 10 }} disabled /> : <TextField type="text" variant="standard" label={`Total:`} style={{ marginBottom: 10 }} value={""} disabled />}
         <br />
-        {(bal != "") ? <input type="text" placeholder={`You have $${bal}`} style={{marginBottom: 10}} disabled /> : <input type="text" placeholder="Please log in." style={{marginBottom: 10}} disabled />}
+        {(bal != "") ? <TextField type="text" variant='standard' label={`You have $${bal}`} style={{marginBottom: 10}} disabled /> : <TextField type="text" variant="standard" label="Please log in." style={{marginBottom: 10}} disabled />}
         <br />
-        <input type="submit" value="Buy" />
+        <Button variant="contained" color="inherit" type="submit" startIcon={<PaymentsIcon />}>Buy</Button>
         <br />
         {(otherText != "") ? <p className="otherText">{otherText}</p> : <p />}
       </form>

@@ -6,6 +6,7 @@ import { getFirestore, getDoc, doc, updateDoc, setDoc } from "firebase/firestore
 import { NavLink } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { useAlert } from "react-alert";
+import { Button, TextField } from "@mui/material";
 
 function LoginPage(){
   const alert = useAlert();
@@ -93,18 +94,19 @@ const renderErrorMessage = (name) =>
 const renderForm = (
   <div className="form">
     <form onSubmit={handleSubmit}>
+      <br />
       <div className="input-container">
-        <label>Username </label>
-        <input type="text" name="uname" required />
+        <TextField variant="standard" label="Username" type="text" name="uname" required />
         {renderErrorMessage("uname")}
       </div>
+      <br />
       <div className="input-container">
-        <label>Password </label>
-        <input type="password" name="pass" required />
+        <TextField variant="standard" label="Password" type="password" name="pass" required />
         {renderErrorMessage("pass")}
       </div>
+      <br />
       <div className="button-container">
-        <input type="submit" value="Login" />
+        <Button type="submit" variant="contained" color="inherit" >Log in</Button>
       </div>
     </form>
   </div>
@@ -112,9 +114,10 @@ const renderForm = (
 return (
     <div className="app">
       <div className="login-form">
+        <br />
         <div className="title">Sign In</div>
         {isSubmitted ? <div><p>User is successfully logged in</p> 
-        <NavLink to={"/"}><button>Back</button></NavLink></div> : renderForm}
+        <NavLink to={"/"} style={{textDecoration: "none", color: "black"}}><Button variant="contained" color="inherit">Back</Button></NavLink></div> : renderForm}
       </div>
     </div>
   );

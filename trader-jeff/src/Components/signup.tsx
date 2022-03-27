@@ -1,4 +1,5 @@
 //import react from "react"
+import { Button, TextField } from "@mui/material";
 import { render } from "@testing-library/react";
 import { initializeApp } from "firebase/app";
 import { doc, getDoc, getFirestore, setDoc } from "firebase/firestore";
@@ -82,7 +83,8 @@ const handleSubmit = (event) => {
   } else {
     var udat = {
       password: pass.value,
-      balance: parseInt(balance.value)
+      balance: parseInt(balance.value),
+      wallet: []
     }
     var docref = doc(app, `users/${uname.value}`);
     setDoc(docref, udat)
@@ -105,23 +107,24 @@ const renderErrorMessage = (name) =>
 // JSX code for login form
 const renderForm = (
   <div className="form">
+    <br />
     <form onSubmit={handleSubmit}>
       <div className="input-container">
-        <label>Username </label>
-        <input type="text" name="uname" required />
+        <TextField label="Username" variant="standard" type="text" name="uname" required />
         {renderErrorMessage("uname")}
       </div>
+      <br />
       <div className="input-container">
-        <label>Password </label>
-        <input type="password" name="pass" required />
+        <TextField label="Password" variant="standard" type="password" name="pass" required />
         {renderErrorMessage("pass")}
       </div>
+      <br />
       <div className="input-container">
-        <label>Starting Balance</label>
-        <input type="number" name="balance" prefix="$" min="0" required />
+        <TextField variant="standard" label="Starting Balance" type="number" name="balance" prefix="$" inputProps={{inputProps: {min: 0}}} required />
         </div>
+        <br />
       <div className="button-container">
-        <input type="submit" value="Login" />
+        <Button variant="contained" color="inherit" type="submit" >Sign Up</Button>
       </div>
     </form>
   </div>
@@ -129,9 +132,10 @@ const renderForm = (
 return (
     <div className="app">
       <div className="login-form">
-        <div className="title">Sign In</div>
+        <br />
+        <div className="title">Sign Up</div>
         {isSubmitted ? <div><p>User has successfully registered</p> 
-        <NavLink to={"/login"}><button>Login</button></NavLink></div> : renderForm}
+        <NavLink to={"/login"} style={{textDecoration: "none", color: "black"}}><Button variant="contained" color="inherit">Login</Button></NavLink></div> : renderForm}
       </div>
     </div>
   );
