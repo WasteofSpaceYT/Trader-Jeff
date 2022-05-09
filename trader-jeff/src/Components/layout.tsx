@@ -87,6 +87,7 @@ const Layout = () => {
     setAuth(false);
     window.location.href = "/";
   }
+  console.log(daUrl)
   return (
     <><nav className="navbar">
       <NavLink to="/"><img src={logo} alt="" className="navlogo"></img></NavLink>
@@ -102,11 +103,10 @@ const Layout = () => {
         <li style={{marginBottom: 5}}><NavLink to="/acctset" style={{ textDecoration: "none", color: "black", marginBottom: 5 }}><Button variant="contained" className="ProfileList">Account Settings</Button></NavLink></li>
         <li style={{marginBottom: 5}}><Button className="DelButt" variant="contained" color="error" onClick={handleLogout}><SvgIcon /></Button></li>
       </ul> : ""}</a> : <header className="alignright">
-        <NavLink to="/login" style={{ textDecoration: 'none', color: "black" }}><Button color="inherit" variant="contained" startIcon={<KeyIcon />}>Login</Button></NavLink>
-        <NavLink to="/signup" style={{ textDecoration: 'none', color: "black", marginLeft: 5 }}><Button variant="contained" color="inherit" startIcon={<LockOpenIcon />}>Sign-up</Button></NavLink>
+        <NavLink to="/login" style={{ textDecoration: 'none', color: "black" }}><Button color="inherit" variant="outlined" startIcon={<KeyIcon />}>Login</Button></NavLink>
+        <NavLink to="/signup" style={{ textDecoration: 'none', color: "black", marginLeft: 5 }}><Button variant="outlined" color="inherit" startIcon={<LockOpenIcon />}>Sign-up</Button></NavLink>
       </header>}
     </nav>
-
       <Outlet /></>
   )
 };

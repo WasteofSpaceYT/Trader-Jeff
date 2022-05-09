@@ -159,7 +159,8 @@ function Sell() {
     <div>
     <h1>Sell</h1>
     <form onSubmit={submit}>
-        <TextField type="text" variant='standard' label="Token" style={{ marginBottom: 10 }} onInput={Balanceing} required />
+        <TextField type="text" variant='standard' label="Token" onInput={Balanceing} required />
+        <br />
         <br />
         {(token != "") ? <TextField variant="standard" type="number" inputProps={{inputProps: {min: 0, max: hasAmount, type: "number"}}} placeholder="Amount" onChange={settotal} style={{marginRight: 10}} required /> : <TextField variant="standard" type="number" inputProps={{inputProps: {min: 0, type: "number"}}} label="Amount" style={{marginRight: 10}} disabled />}
         {(token != "") ? <TextField variant="standard" type="text" label={`Total: $${totalMessage}`} style={{ marginBottom: 10 }} disabled /> : <TextField type="text" label={`Total:`} variant="standard" style={{ marginBottom: 10 }} disabled />}

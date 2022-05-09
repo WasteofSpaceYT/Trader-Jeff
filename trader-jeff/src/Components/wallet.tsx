@@ -64,7 +64,7 @@ const Wallet = () => {
   }
   if(walletthingy){
     return (
-<div id="walletthing">
+<div id="walletthing" style={{marginTop: 50}}>
 <table dangerouslySetInnerHTML={setContent()}></table>
 </div>
     )} else {
